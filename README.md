@@ -38,7 +38,7 @@ On my development machine, I see speed ups of ~9x for 50,000 rows and 30x for 50
     500000 records with CSV library  : 29.190000   0.820000  30.010000 ( 31.398112)
     500000 records with PG COPY      :  0.460000   0.180000   0.640000 (  1.308529)
 
-# To Run The Benchmark
+## To Run The Benchmark
 
     $ bundle install
     $ rake db:migrate
