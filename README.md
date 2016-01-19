@@ -6,9 +6,9 @@
 
 ## How It Works
 
-1. Create a view in PostgreSQL with 1,000,000 rows
-2. Create a `ActiveRecord` object named `ExampleModel` backed by this view
-3. Extended `ActiveRecord::Relation` with two methods `to_csv` and `to_csv_copy`. `to_csv` uses Ruby's built in [CSV](http://ruby-doc.org/stdlib-2.2.4/libdoc/csv/rdoc/CSV.html) while `to_csv_copy` uses the PostgreSQL COPY command.
+1. [Create a view in PostgreSQL with 1,000,000 rows](https://github.com/robdimarco/csv_export_example/blob/master/db/migrate/20160117015839_create_example_models.rb)
+2. Create a [`ActiveRecord` object named `ExampleModel`](https://github.com/robdimarco/csv_export_example/blob/master/app/models/example_model.rb) backed by this view
+3. [Extend `ActiveRecord::Relation` with two methods `to_csv` and `to_csv_copy`](https://github.com/robdimarco/csv_export_example/blob/master/config/initializers/active_record_to_csv.rb). `to_csv` uses Ruby's built in [CSV](http://ruby-doc.org/stdlib-2.2.4/libdoc/csv/rdoc/CSV.html) while `to_csv_copy` uses the PostgreSQL COPY command.
 
 ## Using PostgreSQL COPY
 
@@ -26,6 +26,12 @@ But as the amount of data increases, you can start to see gigantic performance i
 
 On my development machine, I see speed ups of ~9x for 50,000 rows and 30x for 500,000 rows.
 
+## To Run The Benchmark
+
+    $ bundle install
+    $ rake db:migrate
+    $ rake benchmark
+
 ### Example Results
 
            user     system      total        real
@@ -38,8 +44,3 @@ On my development machine, I see speed ups of ~9x for 50,000 rows and 30x for 50
     500000 records with CSV library  : 29.190000   0.820000  30.010000 ( 31.398112)
     500000 records with PG COPY      :  0.460000   0.180000   0.640000 (  1.308529)
 
-## To Run The Benchmark
-
-    $ bundle install
-    $ rake db:migrate
-    $ rake benchmark
